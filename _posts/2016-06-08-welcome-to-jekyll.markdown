@@ -3,6 +3,7 @@ layout: post
 title:  ":+1: Welcome to Jekyll!"
 date:   2016-06-08 09:15:04 +0200
 categories: jekyll update
+type: posts
 lang: en
 tldr:
   es: "Este es el primer post de prueba"
