@@ -1,12 +1,44 @@
 
   <ul class="post-list">
-    {% for post in site.posts %}
+    {% assign posts=site.posts | where:"type","posts" %}
+    {% assign shown=[] %}
+    {% for post in posts %}
+      {% unless shown contains post %}
       <li>
+        {% if post.lang == page.lang %}
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>
+        {% assign shown=shown | push: post %}
+        {% else %}
+          {% for p2 in posts %}
+            <p>{{ p2.name }}</p>
+            {% if p2.title == post.title %}
+      
+              {% assign shown=shown | push: p2 %}
+              {% if p2.lang == page.lang %}
+        <span class="post-meta">{{ p2.date | date: "%b %-d, %Y" }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ p2.url | prepend: site.baseurl }}">{{ p2.title }}</a>
+        </h2>
+              {% assign shown=shown | push: post %}
+              {% endif %}
+            {% endif %}
+            
+          {% endfor %}
+          {% unless shown contains post %}
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+
+        <h2>
+          <a lang="{{ post.lang }}" class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+            {% assign shown=shown | push: post %}
+          {% endunless %}
+        {% endif %}
       </li>
+      {% endunless %}
     {% endfor %}
   </ul>
