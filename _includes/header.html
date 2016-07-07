@@ -19,6 +19,18 @@
           <a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title | escape }}</a>
           {% endif %}
         {% endfor %}
+
+        {% assign posts=site.posts | where:"name", page.name %}
+        {% for post in posts %}
+          {% capture language %}{{page.lang}}{% endcapture %}
+	  {% if post.lang != page.lang %}
+	    {% for emoji in site.data.emoji %}
+	      {% if emoji[0] == post.lang %}
+	        <a href="{{ post.url }}"><img src="{{ emoji[1] }}" title=": {{post.lang}} : " class="emoji"></a>
+              {% endif %}
+	    {% endfor %}
+	  {% endif %}
+        {% endfor %}
       </div>
     </nav>
 

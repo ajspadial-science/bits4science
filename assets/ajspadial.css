@@ -1,0 +1,12 @@
+.page-content p {
+  font-size: 18px;
+}
+
+a[lang]::after {
+  content: " [" attr(lang) "]";
+  font-size: .75em;
+}
+
+img.emoji {
+	height: 20px;
+}
