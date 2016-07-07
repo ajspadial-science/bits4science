@@ -8,16 +8,29 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-permalink: /:title/
+permalink: /:title
 title: Antonio Jesús Padial
 email: antonio@spadial.com
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://spadial.com" # the base hostname & protocol for your site
+#url: "http://spadial.com" # the base hostname & protocol for your site
 twitter_username: ajspadial
 github_username:  ajspadial
 
 # Build settings
 markdown: kramdown
+
+defaults:
+  -
+    scope:
+      path: _posts/ast
+    values:
+      permalink: /:title,ast
+
+  -
+    scope:
+      path: _posts/es
+    values:
+      permalink: /:title,es
 
 gems:
   - jemoji
