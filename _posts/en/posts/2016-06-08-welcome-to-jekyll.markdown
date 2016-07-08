@@ -8,6 +8,7 @@ lang: en
 tldr:
   es: "Este es el primer post de prueba"
   ast: "Esti ye'l primer post de prueba"
+name: welcome-to-jekyll
 ---
 * es :es:
 * en :gb:
