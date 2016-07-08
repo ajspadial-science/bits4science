@@ -1,30 +1,44 @@
 
   <ul class="post-list">
     {% assign posts=site.posts | where:"type","posts" %}
-    {% assign shown=[] %}
-    {% for post in posts %}
-      {% unless shown contains post %}
-      <li>
-        {% if post.lang == page.lang %}
-          {% include post_list_element.html post=post %}
-          {% assign shown=shown | push: post %}
+    {% assign n=posts | size %}
+    {% assign last_post=n | minus:1 %}
+    {% for i in (0..last_post) %}
+      {% assign current_post=posts[i] %}
+      {% assign next=false %}
+      {% assign prev_post=i | minus:1 %}
+      {% for j in (0..prev_post) %}
+        {% if current_post.name == posts[j].name %}
+          {% assign next=true %}
+          {% break %}
         {% endif %}
-        {% for p2 in posts %}
-          {% if p2.name == post.name %}
-            {% assign shown=shown | push: p2 %}
-            {% if p2.lang == page.lang %}
-              {% unless shown contains post %}
-                {% include post_list_element.html post=p2 %}
-                {% assign shown=shown | push: post %}
-              {% endunless %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-        {% unless shown contains post %}
-          {% include post_list_element.html post=post %}
-          {% assign shown=shown | push: post %}
-        {% endunless %}
-      </li>
+      {% endfor %}
+      {% if next %}
+        {% continue %}
+      {% endif %}
+
+      {% if posts[i].lang == page.lang %}
+        <li>
+          {% include post_list_element.html post=current_post %}
+        </li>
+        {% continue %}
+      {% endif %}
+
+      {% assign next_post=i | plus:1 %}
+      {% for j in (next_post..last_post) %}
+        {% if current_post.name == posts[j].name and posts[j].lang == page.lang %}
+          {% assign translation=posts[j] %}
+            <li>
+              {% include post_list_element.html post=translation %}
+            </li>
+          {% assign next=true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      {% unless next %}
+        <li>
+          {% include post_list_element.html post=current_post %}
+        </li>
       {% endunless %}
     {% endfor %}
   </ul>
