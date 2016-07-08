@@ -1,0 +1,7 @@
+<span class="post-meta">{{ include.post.date | date: "%b %-d, %Y" }}</span>
+
+<h2>
+  <a {% if include.post.lang != page.lang %}lang="{{ include.post.lang }}"{% endif %} class="post-link" href="{{ include.post.url | prepend: site.baseurl }}">
+    {{ include.post.title }}
+  </a>
+</h2>
