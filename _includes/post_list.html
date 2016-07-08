@@ -8,23 +8,22 @@
         {% if post.lang == page.lang %}
           {% include post_list_element.html post=post %}
           {% assign shown=shown | push: post %}
-        {% else %}
-          {% for p2 in posts %}
-            {% if p2.title == post.title %}
-      
-              {% assign shown=shown | push: p2 %}
-              {% if p2.lang == page.lang %}
+        {% endif %}
+        {% for p2 in posts %}
+          {% if p2.title == post.title %}
+            {% assign shown=shown | push: p2 %}
+            {% if p2.lang == page.lang %}
+              {% unless shown contains post %}
                 {% include post_list_element.html post=p2 %}
                 {% assign shown=shown | push: post %}
-              {% endif %}
+              {% endunless %}
             {% endif %}
-            
-          {% endfor %}
-          {% unless shown contains post %}
-            {% include post_list_element.html post=post %}
-            {% assign shown=shown | push: post %}
-          {% endunless %}
-        {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% unless shown contains post %}
+          {% include post_list_element.html post=post %}
+          {% assign shown=shown | push: post %}
+        {% endunless %}
       </li>
       {% endunless %}
     {% endfor %}
